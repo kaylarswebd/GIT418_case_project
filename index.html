@@ -1,0 +1,108 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Case Project</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="script/script.js"></script>
+</head>
+
+
+
+<body>
+
+<div class="container">
+
+
+<nav>
+  <ul>
+    <li><a href="">Home</a></li>
+    <li><a href="">Page Two</a></li>
+    <li><a href="">Page Three</a></li>
+    <li><a href="">Page Four</a></li>
+  </ul>
+</nav>
+
+
+<article>
+<h1>Choose your car!</h1>
+
+  <form>
+     <fieldset id="deliveryinfo">
+        <legend>Delivery Information</legend>
+        <label for="carbrand">Car Brand</label>
+        <input type="text" id="carbrand" name="name" required="required" /> <br>
+        <label for="carmodel">Car Model</label>
+        <input type="text" id="carmodel" name="address" required="required" /><br>
+     </fieldset>
+     <fieldset id="showmethemorty">
+        <input type="button" id="showButton" value="Choose this car." />
+     </fieldset>
+  </form>
+  <section>
+     <h3>Car Chosen</h3>
+     <div id="showCar"></div>
+  </section>
+</article>
+
+<script>
+ 
+
+ /*defining variables*/
+var carInfo = {};
+var carSummary = document.getElementById("showCar");
+ 
+
+/* funcation in a function*/
+function showCarChoice()
+{
+	processCarInfo();
+
+	document.getElementsByTagName("section")[0].style.display = "block";
+}
+
+/* funcation that processes car information*/
+function processCarInfo()
+{
+	var prop;
+	carInfo.name = document.getElementById("carbrand").value;
+	carInfo.addr = document.getElementById("carmodel").value;
+	for (prop in carInfo)
+	{
+		carSummary.innerHTML += "<p>" + carInfo[prop] + "</p>";
+	}
+	document.getElementById("showCar").style.display = "block";
+}
+
+
+/*event listener*/
+function createEventListener()
+{
+	var showButton = document.getElementById("showButton");
+	if (showButton.addEventListener)
+	{
+		showButton.addEventListener("click", showCarChoice, false);
+	}
+	else if (showButton.attachEvent)
+	{
+		showButton.attachEvent("onclick", showCarChoice);
+	}
+}
+
+/*event listener when page is done loading*/
+if (window.addEventListener)
+{
+	window.addEventListener("load", createEventListener, false);
+}
+else if (window.attachEvent)
+{
+	window.attachEvent("onload", createEventListener);
+}
+
+</script>
+
+<script src="script/script.js"></script>
+
+</body>
+
+</html>
