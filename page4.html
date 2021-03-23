@@ -5,8 +5,6 @@
     <title>Case Project</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="script/script.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
 </head>
 
 
@@ -30,23 +28,14 @@
 <h1>Choose your car!</h1>
 
   <form>
-
-
-
-    <fieldset id="carselection">
-        <label for="cars">Choose a car:</label>
-        <br>
-
-         <select id="cars" name="cars">
-            <option value=""></option>
-            <option id="Subaru" value="Subaru"></option>
-            <option id="Saab" value="Saab"></option>
-            <option id="Fiat" value="Fiat"></option>
-            <option id="Audi" value="Audi"></option>
-            <option id="Lexus" value="Lexus">Lexus</option>
-         </select>
-      </fieldset>
-
+     <fieldset id="deliveryinfo">
+        <legend>Type of car</legend>
+        <label for="carbrand">Car Brand</label>
+        <input type="option" id="carbrand" name="name" required="required" /> <br>
+        <label for="carmodel">Car Model</label>
+        <input type="text" id="carmodel" name="address" required="required" /><br>
+     </fieldset>
+     
      <fieldset id="showmethemorty">
         <input type="button" id="showButton" value="Choose this car." />
      </fieldset>
@@ -63,19 +52,13 @@
  /*defining variables*/
 var carInfo = {};
 var carSummary = document.getElementById("showCar");
-var talk = "The car that you choose is ";
-var carss = ["Subaru", "Saab", "Fiat", "Audi", "Lexus"];
-
-document.getElementById("Subaru").innerHTML = carss[0]
-document.getElementById("Saab").innerHTML = carss[1]
-document.getElementById("Fiat").innerHTML = carss[2]
-document.getElementById("Audi").innerHTML = carss[3]
-document.getElementById("Lexus").innerHTML = carss[4]
+ 
 
 /* funcation in a function*/
 function showCarChoice()
 {
 	processCarInfo();
+
 	document.getElementsByTagName("section")[0].style.display = "block";
 }
 
@@ -83,10 +66,11 @@ function showCarChoice()
 function processCarInfo()
 {
 	var prop;
-   carInfo.car = document.getElementById("cars").value;
+	carInfo.name = document.getElementById("carbrand").value;
+	carInfo.addr = document.getElementById("carmodel").value;
 	for (prop in carInfo)
 	{
-		carSummary.innerHTML += "<p>" + talk + carInfo[prop] + "</p>";
+		carSummary.innerHTML += "<p>" + carInfo[prop] + "</p>";
 	}
 	document.getElementById("showCar").style.display = "block";
 }

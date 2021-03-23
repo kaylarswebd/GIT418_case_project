@@ -1,5 +1,6 @@
 * {
     margin: 0;
+    font-family: 'PT Sans', sans-serif;
 }
 
 .container {
@@ -42,7 +43,13 @@ form {
     float: left;
     background-color: sandybrown;
     margin: 10px;
-
+    padding: 15px;
+}
+fieldset {
+    padding: 10px;
+}
+input {
+    margin: 10px;
 }
 
 section {
