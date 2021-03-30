@@ -60,9 +60,25 @@ section {
    margin-top: 10px;
    display: none;
 }
+h3 {
+    float: right;
+    width: 40%;
+    background: white;
+    border: 5px solid salmon;
+    margin-top: 10px;
+ }
 
 section div {
    margin-left: 20px;
    display: none;
    padding: 10px;
 }
+
+.mod2 {
+    float: right;
+    width: 40%;
+    background: white;
+    border: 5px solid salmon;
+    margin-top: 10px;
+ }
+

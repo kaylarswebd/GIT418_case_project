@@ -1,41 +1,51 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Case Project</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="script/script.js"></script>
+   <meta charset="utf-8">
+   <title>Case Project</title>
+   <link rel="stylesheet" href="css/style.css">
+   <script src="script/script.js"></script>
 </head>
 
 
 
 <body>
 
-<div class="container">
+   <div class="container">
 
-
-<nav>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="">Page Two</a></li>
-    <li><a href="">Page Three</a></li>
-    <li><a href="page4.html">Chapter 7</a></li>
-  </ul>
-</nav>
+      <nav>
+         <ul>
+            <li><a href="index.html">Works in progress</a></li>
+            <li><a href="page2.html">Chapter 7 & 8</a></li>
+            <li><a href="">Page3</a></li>
+            <li><a href="page4.html">page4</a></li>
+         </ul>
+      </nav>
 
 
 <article>
 <h1>Choose your car!</h1>
 
   <form>
-     <fieldset id="deliveryinfo">
-        <legend>Type of car</legend>
-        <label for="carbrand">Car Brand</label>
-        <input type="option" id="carbrand" name="name" required="required" /> <br>
-        <label for="carmodel">Car Model</label>
-        <input type="text" id="carmodel" name="address" required="required" /><br>
-     </fieldset>
-     
+
+
+
+    <fieldset id="carselection">
+        <label for="cars">Choose a car:</label>
+        <br>
+
+         <select id="cars" name="cars">
+            <option value=""></option>
+            <option id="Subaru" value="Subaru"></option>
+            <option id="Saab" value="Saab"></option>
+            <option id="Fiat" value="Fiat"></option>
+            <option id="Audi" value="Audi"></option>
+            <option id="Lexus" value="Lexus"></option>
+         </select>
+
+         
+      </fieldset>
+
      <fieldset id="showmethemorty">
         <input type="button" id="showButton" value="Choose this car." />
      </fieldset>
@@ -52,13 +62,19 @@
  /*defining variables*/
 var carInfo = {};
 var carSummary = document.getElementById("showCar");
- 
+var talk = "The car that you choose is ";
+var carss = ["Subaru", "Saab", "Fiat", "Audi", "Lexus"];
+
+document.getElementById("Subaru").innerHTML = carss[0]
+document.getElementById("Saab").innerHTML = carss[1]
+document.getElementById("Fiat").innerHTML = carss[2]
+document.getElementById("Audi").innerHTML = carss[3]
+document.getElementById("Lexus").innerHTML = carss[4]
 
 /* funcation in a function*/
 function showCarChoice()
 {
 	processCarInfo();
-
 	document.getElementsByTagName("section")[0].style.display = "block";
 }
 
@@ -66,11 +82,10 @@ function showCarChoice()
 function processCarInfo()
 {
 	var prop;
-	carInfo.name = document.getElementById("carbrand").value;
-	carInfo.addr = document.getElementById("carmodel").value;
+   carInfo.car = document.getElementById("cars").value;
 	for (prop in carInfo)
 	{
-		carSummary.innerHTML += "<p>" + carInfo[prop] + "</p>";
+		carSummary.innerHTML += "<p>" + talk + carInfo[prop] + "</p>";
 	}
 	document.getElementById("showCar").style.display = "block";
 }

@@ -15,8 +15,8 @@
 
       <nav>
          <ul>
-            <li><a href="index.html">Index/Home</a></li>
-            <li><a href="page2.html">page2</a></li>
+            <li><a href="index.html">Works in progress</a></li>
+            <li><a href="page2.html">Chapter 7 & 8</a></li>
             <li><a href="">Page3</a></li>
             <li><a href="page4.html">page4</a></li>
          </ul>
@@ -86,12 +86,12 @@
          <fieldset>
             <label for="email">Enter Email</label>
             <input type='text' name='emailAdd1' /><br>
-            <input type="submit" name="submit" value="Submit" onclick="Valemail(document.form1.emailAdd1)" />
+            <input type="submit" name="submit" value="Submit" onclick="Valemail(document.form1.emailAdd1)"/>
          </fieldset>
       </form>
    </div>
    <script>
-      /*module 7*/ //////////////////////////////////////////////////////
+      /*module 7*///////////////////////////////////////////////////////
       /*defining variables*/
       var carInfo = {};
       var carSummary = document.getElementById("showCar");
@@ -100,7 +100,7 @@
       function showCarChoice() {
          processCarInfo();
 
-         document.getElementsByTagName("section")[0].style.display = "block";
+         document.getElementsByTagName("section")[0].style.display = "block"; 
       }
 
       /* funcation that processes car information*/
@@ -132,8 +132,6 @@
          window.attachEvent("onload", createEventListener);
       }
 
-
-
       /*Module 8*/ /////////////////////////////////////////////////////
       //global variables
       var cars = [];
@@ -162,6 +160,7 @@
             }
          }
       }
+
       var carr = document.getElementsByName("carr");
       if (carr[0].addEventListener) {
          for (var i = 0; i < carr.length; i++) {
@@ -172,12 +171,16 @@
             carr[i].attachEvent("onchange", carList);
          }
       }
+
       function changeToString() { //converting the array to a string
          carString = JSON.stringify(cars);
          console.log(JSON.stringify(cars));
          document.getElementById("list").innerHTML = "";
          document.getElementById("list").innerHTML = carString;
+
+
       }
+
       var button = document.getElementById("subBut");
       if (button.addEventListener) {
          button.addEventListener("click", changeToString, false);
@@ -185,30 +188,28 @@
          button.attachEvent("onclick", changeToString);
       }
 
-
-
       //mod9/////////////////////////////////////////////////////////
       function limit1(element) { //error function for more that 10 characters
          var max_chars = 10;
-         var firstName = document.getElementById("one").value;
-         localStorage.one = firstName;
          if (element.value.length > max_chars) {
             alert("Max limit of characters for this input in 10");
          }
-
+         var firstName = document.getElementById("one").value;
+         localStorage.one = firstName;
       }
+
       function limit2(element) { //error function for more that 15 characters
          var max_chars = 15;
-         var lastName = document.getElementById("two").value;
-         localStorage.one = lastName;
          if (element.value.length > max_chars) {
             alert("Max limit of characters for this input in 15");
          }
-
+         var lastName = document.getElementById("two").value;
+         localStorage.one = lastName;
       }
+
       function Valemail(inputText) { //email must have at @ symbol and a period
-         var validateEmail = "@" + ".";
-         if (inputText.value.match(validateEmail)) {
+         var atPresent = "@" + ".";
+         if (inputText.value.match(atPresent)) {
             return true;
          } else { //if they do not have these then an error will be thrown
             alert("The email that you have entered is invalid");
@@ -216,10 +217,6 @@
             return false;
          }
       }
-
-
-
-
    </script>
 
    <script src="script/script.js"></script>
