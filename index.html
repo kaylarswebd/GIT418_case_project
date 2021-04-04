@@ -5,9 +5,27 @@
    <title>Case Project</title>
    <link rel="stylesheet" href="css/style.css">
    <script src="script/script.js"></script>
+
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+   <link rel="stylesheet" type="text/css" href="./style.css" />
+   <script src="./index.js"></script>
 </head>
 
+<style>
+   /* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+   #map {
+      height: 100%;
+   }
 
+   /* Optional: Makes the sample page fill the window. */
+   html,
+   body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+   }
+</style>
 
 <body>
 
@@ -16,210 +34,30 @@
       <nav>
          <ul>
             <li><a href="index.html">Index/Home</a></li>
-            <li><a href="page2.html">page2</a></li>
+            <li><a href="page2.html">mod 7-9</a></li>
             <li><a href="">Page3</a></li>
             <li><a href="page4.html">page4</a></li>
          </ul>
       </nav>
 
+      <div id="map"></div>
 
-      <article>
-         <h1>Choose your car!</h1>
-         <form>
-            <fieldset id="deliveryinfo">
-               <legend>Type of car (Module 7)</legend>
-               <label for="carbrand">Car Brand</label>
-               <input type="option" id="carbrand" name="name" required="required" /> <br>
-               <label for="carmodel">Car Model</label>
-               <input type="text" id="carmodel" name="address" required="required" /><br>
-            </fieldset>
-            <br>
-            <fieldset id="showmethemorty">
-               <input type="button" id="showButton" value="Choose this car." />
-            </fieldset>
-         </form>
-         <h3>Car Chosen</h3>
-         <section>
-            <div id="showCar"></div>
-         </section>
-      </article>
-      <br>
-      <!--mod8-->
-      <article>
-         <form>
-            <fieldset class="cars">
-               <legend><span>Cars (Module 8)</span></legend>
-               <input type="checkbox" id="car1" value="car1" name="carr" />
-               <label for="car1" id="car1 Label">car1</label><br>
-               <input type="checkbox" id="car2" value="car2" name="carr" />
-               <label for="car2" id="car2">car2</label><br>
-               <input type="checkbox" id="car3" value="car3" name="carr" />
-               <label for="car3" id="car3">car3</label><br>
-               <input type="checkbox" id="car4" value="car4" name="carr" />
-               <label for="car4" id="car4">car4</label><br>
-               <input type="checkbox" id="car5" value="car5" name="carr" />
-               <label for="car5" id="car5">car5</label><br>
-               <input type="checkbox" id="car6" value="car6" name="carr" />
-               <label for="car6" id="car6">car6</label><br>
-            </fieldset>
-            <br>
-            <fieldset>
-               <input type="button" id="subBut" value="Cars chosen" />
-            </fieldset>
-         </form>
-         <h3>Selected Cars</h3>
-         <div class="mod2">
-            <p id="list"></p>
-         </div>
-      </article>
-      <br>
-      <!--Mod9-->
-      <form name="form1" action="#">
-         <fieldset>
-            <legend>Enter Information Here (Module 9)</legend>
-            <label for="limitchar">First Name</label>
-            <input type="text" id="one" onkeydown="limit1(this);" onkeyup="limit1(this);"><br>
-            <label for="limitchar">Last Name</label>
-            <input type="text" id="two" onkeydown="limit2(this);" onkeyup="limit2(this);">
-         </fieldset>
-         <br>
-         <fieldset>
-            <label for="email">Enter Email</label>
-            <input type='text' name='emailAdd1' /><br>
-            <input type="submit" name="submit" value="Submit" onclick="Valemail(document.form1.emailAdd1)" />
-         </fieldset>
-      </form>
+      <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRTKHVJnWpZvGAEejzfterI1BXjy72Cik&callback=initMap&libraries=&v=weekly"
+         async></script>
+
+
    </div>
+
    <script>
-      /*module 7*/ //////////////////////////////////////////////////////
-      /*defining variables*/
-      var carInfo = {};
-      var carSummary = document.getElementById("showCar");
+      let map;
 
-      /* funcation in a function*/
-      function showCarChoice() {
-         processCarInfo();
-
-         document.getElementsByTagName("section")[0].style.display = "block";
+      function initMap() {
+         map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 8,
+         });
       }
-
-      /* funcation that processes car information*/
-      function processCarInfo() {
-         var prop;
-         carInfo.name = document.getElementById("carbrand").value;
-         carInfo.addr = document.getElementById("carmodel").value;
-         for (prop in carInfo) {
-            carSummary.innerHTML += "<p>" + carInfo[prop] + "</p>";
-         }
-         document.getElementById("showCar").style.display = "block";
-      }
-
-
-      /*event listener*/
-      function createEventListener() {
-         var showButton = document.getElementById("showButton");
-         if (showButton.addEventListener) {
-            showButton.addEventListener("click", showCarChoice, false);
-         } else if (showButton.attachEvent) {
-            showButton.attachEvent("onclick", showCarChoice);
-         }
-      }
-
-      /*event listener when page is done loading*/
-      if (window.addEventListener) {
-         window.addEventListener("load", createEventListener, false);
-      } else if (window.attachEvent) {
-         window.attachEvent("onload", createEventListener);
-      }
-
-
-
-      /*Module 8*/ /////////////////////////////////////////////////////
-      //global variables
-      var cars = [];
-      var carString;
-
-      function carList(event) {
-         if (event === undefined) { //element in IE8
-            event = window.event;
-         }
-         var callerElement = event.target || event.srcElement;
-         var carName = callerElement.value;
-         if (callerElement.checked) { //if checked add to array
-            cars.push(carName);
-            var addCar = document.createElement("li");
-            addCar.innerHTML = carName;
-            document.getElementById("carlist").appendChild(addCar);
-            document.getElementById("carlist").style.display = "block";
-         } else { //when unchecked remove from array
-            var listItems = document.querySelectorAll("#carlist li");
-            for (var i = 0; i < listItems.length; i++) {
-               if (listItems[i].innerHTML === carName) {
-                  cars.splice(i, 1);
-                  listItems[i].parentNode.removeChild(listItems[i]);
-                  break;
-               }
-            }
-         }
-      }
-      var carr = document.getElementsByName("carr");
-      if (carr[0].addEventListener) {
-         for (var i = 0; i < carr.length; i++) {
-            carr[i].addEventListener("change", carList, false);
-         }
-      } else if (carr[0].attachEvent) {
-         for (var i = 0; i < carr.length; i++) {
-            carr[i].attachEvent("onchange", carList);
-         }
-      }
-      function changeToString() { //converting the array to a string
-         carString = JSON.stringify(cars);
-         console.log(JSON.stringify(cars));
-         document.getElementById("list").innerHTML = "";
-         document.getElementById("list").innerHTML = carString;
-      }
-      var button = document.getElementById("subBut");
-      if (button.addEventListener) {
-         button.addEventListener("click", changeToString, false);
-      } else if (button.attachEvent) {
-         button.attachEvent("onclick", changeToString);
-      }
-
-
-
-      //mod9/////////////////////////////////////////////////////////
-      function limit1(element) { //error function for more that 10 characters
-         var max_chars = 10;
-         var firstName = document.getElementById("one").value;
-         localStorage.one = firstName;
-         if (element.value.length > max_chars) {
-            alert("Max limit of characters for this input in 10");
-         }
-
-      }
-      function limit2(element) { //error function for more that 15 characters
-         var max_chars = 15;
-         var lastName = document.getElementById("two").value;
-         localStorage.one = lastName;
-         if (element.value.length > max_chars) {
-            alert("Max limit of characters for this input in 15");
-         }
-
-      }
-      function Valemail(inputText) { //email must have at @ symbol and a period
-         var validateEmail = "@" + ".";
-         if (inputText.value.match(validateEmail)) {
-            return true;
-         } else { //if they do not have these then an error will be thrown
-            alert("The email that you have entered is invalid");
-            document.form1.emailAdd1.focus();
-            return false;
-         }
-      }
-
-
-
-
    </script>
 
    <script src="script/script.js"></script>
