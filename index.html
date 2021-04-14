@@ -5,26 +5,10 @@
    <title>Case Project</title>
    <link rel="stylesheet" href="css/style.css">
    <script src="script/script.js"></script>
-
-   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-   <link rel="stylesheet" type="text/css" href="./style.css" />
-   <script src="./index.js"></script>
 </head>
 
 <style>
-   /* Always set the map height explicitly to define the size of the div
-* element that contains the map. */
-   #map {
-      height: 100%;
-   }
 
-   /* Optional: Makes the sample page fill the window. */
-   html,
-   body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-   }
 </style>
 
 <body>
@@ -35,32 +19,57 @@
          <ul>
             <li><a href="index.html">Index/Home</a></li>
             <li><a href="page2.html">mod 7-9</a></li>
-            <li><a href="">Page3</a></li>
-            <li><a href="page4.html">page4</a></li>
+            <li><a href="page3.html">Map</a></li>
+            <li><a href="page4.html">mod 7</a></li>
          </ul>
       </nav>
 
-      <div id="map"></div>
+      <div class="main">
+         <div class="header">
+            <h1>Module 5 Chapter 11 OpenWeatherMap API</h1>
+            <p>Enter city name in input box below to get weather. Example = Tempe</p>
+         </div>
 
-      <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRTKHVJnWpZvGAEejzfterI1BXjy72Cik&callback=initMap&libraries=&v=weekly"
-         async></script>
+         <div class="input">
+            <input type="text" placeholder="Enter the city" class="input_text">
+            <input type="submit" value="Submit" class="submit">
+         </div>
+      </div>
 
+      <div class="card">
+         <h1 class="name" id="name"></h1>
+         <p class="temp"></p>
+         <p class="clouds"></p>
+         <p class="desc"></p>
+      </div>
 
-   </div>
+      <script>
+         //global variables selected by class
+         var input = document.querySelector('.input_text');
+         var main = document.querySelector('#name');
+         var temp = document.querySelector('.temp');
+         var desc = document.querySelector('.desc');
+         var clouds = document.querySelector('.clouds');
+         var button = document.querySelector('.submit');
 
-   <script>
-      let map;
-
-      function initMap() {
-         map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-         });
-      }
-   </script>
-
-   <script src="script/script.js"></script>
+         //on click button to fetch, show, or throw error
+         button.addEventListener('click', function (name) {
+            fetch('https://api.openweathermap.org/data/2.5/weather?q=' + input.value + '&appid=02ee5663f2d547d7b7b6529e7719d55a')
+               .then(response => response.json())
+               .then(data => {
+                  var tempValue = data['main']['temp'];
+                  var nameValue = data['name'];
+                  var descValue = data['weather'][0]['description'];
+                  main.innerHTML = nameValue;
+                  desc.innerHTML = "Desc - " + descValue;
+                  temp.innerHTML = "Temp - " + tempValue;
+                  input.value = "";
+               })
+               //alert if city is not found
+               .catch(err => alert("City Not Found!!!"));
+               alert(jqXHR.status);
+         })
+      </script>
 
 </body>
 

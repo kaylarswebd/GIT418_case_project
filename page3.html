@@ -1,0 +1,91 @@
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <title>Case Project</title>
+   <link rel="stylesheet" href="css/style.css">
+   <script src="script/script.js"></script>
+
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+   <link rel="stylesheet" type="text/css" href="./style.css" />
+   <script src="./index.js"></script>
+</head>
+
+<style>
+   #map {
+      height: 500px;
+      width: 100%;
+   }
+</style>
+
+<body>
+
+   <div class="container">
+
+    <nav>
+        <ul>
+           <li><a href="index.html">Index/Home</a></li>
+           <li><a href="page2.html">mod 7-9</a></li>
+           <li><a href="page3.html">Map</a></li>
+           <li><a href="page4.html">mod 7</a></li>
+        </ul>
+     </nav>
+
+<div id="map"></div>
+
+<!-- Universal script for google with developer API key -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRTKHVJnWpZvGAEejzfterI1BXjy72Cik&callback=initMap&libraries=&v=weekly"
+async></script>
+
+
+</div>
+
+   <script>
+//map variable 
+let map;
+//function to have location to be above sydney
+function initMap() {
+   map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 8,
+   });
+}
+
+
+//below is work along project 10-8
+"use strict";
+var waitForUser;
+
+function geoTest() {
+   waitForUser = setTimeout(fail, 10000);
+   if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(createMap, fail);
+   } else {
+      fail();
+   }
+}
+
+//function to make the positioning of the map to be over users location
+function createMap(position) { 
+   clearTimeout(waitForUser);
+   var Lat;
+   var Lng;
+   Lat = position.coords.latitude;
+   Lng = position.coords.longitude;
+   var mapOptions = {
+      center: new google.maps.LatLng(Lat, Lng),
+      zoom: 10
+   };
+   var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
+//function popping up error  if map fails to load
+function fail() {
+   document.getElementById("map").innerHTML = "Unable to access your current location.";
+}
+   </script>
+
+   <script src="script/script.js"></script>
+
+</body>
+
+</html>
