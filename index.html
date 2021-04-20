@@ -4,11 +4,14 @@
    <meta charset="utf-8">
    <title>Case Project</title>
    <link rel="stylesheet" href="css/style.css">
-   <script src="script/script.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <style>
-
+   button {
+      padding: 15px;
+      margin: 15px;
+   }
 </style>
 
 <body>
@@ -19,56 +22,63 @@
          <ul>
             <li><a href="index.html">Index/Home</a></li>
             <li><a href="page2.html">mod 7-9</a></li>
-            <li><a href="page3.html">Map</a></li>
+            <li><a href="page3.html">Map and Weather</a></li>
             <li><a href="page4.html">mod 7</a></li>
          </ul>
       </nav>
 
-      <div class="main">
-         <div class="header">
-            <h1>Module 5 Chapter 11 OpenWeatherMap API</h1>
-            <p>Enter city name in input box below to get weather. Example = Tempe</p>
-         </div>
+      <button id="changeRed">Change the color of the text</button>
+      <p id="size">
+         <span id="colorChange">Some text that will change color</span>
+      </p>
 
-         <div class="input">
-            <input type="text" placeholder="Enter the city" class="input_text">
-            <input type="submit" value="Submit" class="submit">
-         </div>
-      </div>
+      <button id="hide">Hide</button>
+      <button id="show">Show</button>
 
-      <div class="card">
-         <h1 class="name" id="name"></h1>
-         <p class="temp"></p>
-         <p class="clouds"></p>
-         <p class="desc"></p>
-      </div>
+      <h1 id="myH1">This text will hide and show when you click corresponding buttons</h1>
 
       <script>
-         //global variables selected by class
-         var input = document.querySelector('.input_text');
-         var main = document.querySelector('#name');
-         var temp = document.querySelector('.temp');
-         var desc = document.querySelector('.desc');
-         var clouds = document.querySelector('.clouds');
-         var button = document.querySelector('.submit');
+         //document.getElementById("changeRed").onclick = function () {
+         //document.getElementById("colorChange").style.color = 'red';
+         //}
 
-         //on click button to fetch, show, or throw error
-         button.addEventListener('click', function (name) {
-            fetch('https://api.openweathermap.org/data/2.5/weather?q=' + input.value + '&appid=02ee5663f2d547d7b7b6529e7719d55a')
-               .then(response => response.json())
-               .then(data => {
-                  var tempValue = data['main']['temp'];
-                  var nameValue = data['name'];
-                  var descValue = data['weather'][0]['description'];
-                  main.innerHTML = nameValue;
-                  desc.innerHTML = "Desc - " + descValue;
-                  temp.innerHTML = "Temp - " + tempValue;
-                  input.value = "";
-               })
-               //alert if city is not found
-               .catch(err => alert("City Not Found!!!"));
-               alert(jqXHR.status);
-         })
+         //document.getElementById("changeRed").onclick = function () {
+         //document.getElementById("size").style.font-size = '25px';
+         //}
+
+         //color change using jQuery 
+         $(document).ready(function () {
+            //button on click
+            $("button").click(function () {
+               //change all p's to red
+               $("p").css("color", "red");
+
+               //change all p's to font-size 25px
+               $("p").css("font-size", "25px");
+            });
+         });
+
+         //javaScript using if and else to hide and show text
+         //function myFunction() {
+            //var hideShow = document.getElementById("myH1");
+            //if (hideShow.style.display === "none") {
+               //hideShow.style.display = "block";
+            //} else {
+               //hideShow.style.display = "none";
+            //}
+         //}
+
+         //hide and show using jQuery
+         $(document).ready(function () {
+            //hide function to hide the h1 on click
+            $("#hide").click(function () {
+               $("h1").hide();
+            });
+            //how function to hide the h1 on click
+            $("#show").click(function () {
+               $("h1").show();
+            });
+         });
       </script>
 
 </body>
