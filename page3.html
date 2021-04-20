@@ -22,66 +22,113 @@
 
    <div class="container">
 
-    <nav>
-        <ul>
-           <li><a href="index.html">Index/Home</a></li>
-           <li><a href="page2.html">mod 7-9</a></li>
-           <li><a href="page3.html">Map</a></li>
-           <li><a href="page4.html">mod 7</a></li>
-        </ul>
-     </nav>
+      <nav>
+         <ul>
+            <li><a href="index.html">Index/Home</a></li>
+            <li><a href="page2.html">mod 7-9</a></li>
+            <li><a href="page3.html">Map and Weather</a></li>
+            <li><a href="page4.html">mod 7</a></li>
+         </ul>
+      </nav>
 
-<div id="map"></div>
+      <div id="map"></div>
 
-<!-- Universal script for google with developer API key -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRTKHVJnWpZvGAEejzfterI1BXjy72Cik&callback=initMap&libraries=&v=weekly"
-async></script>
+      <!-- Universal script for google with developer API key -->
+      <script
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRTKHVJnWpZvGAEejzfterI1BXjy72Cik&callback=initMap&libraries=&v=weekly"
+         async></script>
+
+         <!--openweathermap-->
+         <div class="main">
+            <div class="header">
+               <h1>Module 5 Chapter 11 OpenWeatherMap API</h1>
+               <p>Enter city name in input box below to get weather. Example = Tempe</p>
+            </div>
+   
+            <div class="input">
+               <input type="text" placeholder="Enter the city" class="input_text">
+               <input type="submit" value="Submit" class="submit">
+            </div>
+         </div>
+   
+         <div class="card">
+            <h1 class="name" id="name"></h1>
+            <p class="temp"></p>
+            <p class="clouds"></p>
+            <p class="desc"></p>
+         </div>
 
 
-</div>
+   </div>
 
    <script>
-//map variable 
-let map;
-//function to have location to be above sydney
-function initMap() {
-   map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-   });
-}
+      //map variable 
+      let map;
+      //function to have location to be above sydney
+      function initMap() {
+         map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 8,
+         });
+      }
 
+      //below is work along project 10-8
+      "use strict";
+      var waitForUser;
 
-//below is work along project 10-8
-"use strict";
-var waitForUser;
+      function geoTest() {
+         waitForUser = setTimeout(fail, 10000);
+         if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(createMap, fail);
+         } else {
+            fail();
+         }
+      }
 
-function geoTest() {
-   waitForUser = setTimeout(fail, 10000);
-   if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(createMap, fail);
-   } else {
-      fail();
-   }
-}
+      //function to make the positioning of the map to be over users location
+      function createMap(position) {
+         clearTimeout(waitForUser);
+         var Lat;
+         var Lng;
+         Lat = position.coords.latitude;
+         Lng = position.coords.longitude;
+         var mapOptions = {
+            center: new google.maps.LatLng(Lat, Lng),
+            zoom: 10
+         };
+         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      }
+      //function popping up error  if map fails to load
+      function fail() {
+         document.getElementById("map").innerHTML = "Unable to access your current location.";
+      }
 
-//function to make the positioning of the map to be over users location
-function createMap(position) { 
-   clearTimeout(waitForUser);
-   var Lat;
-   var Lng;
-   Lat = position.coords.latitude;
-   Lng = position.coords.longitude;
-   var mapOptions = {
-      center: new google.maps.LatLng(Lat, Lng),
-      zoom: 10
-   };
-   var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-}
-//function popping up error  if map fails to load
-function fail() {
-   document.getElementById("map").innerHTML = "Unable to access your current location.";
-}
+      ///////////////////////////tempature
+      //global variables selected by class
+      var input = document.querySelector('.input_text');
+      var main = document.querySelector('#name');
+      var temp = document.querySelector('.temp');
+      var desc = document.querySelector('.desc');
+      var clouds = document.querySelector('.clouds');
+      var button = document.querySelector('.submit');
+
+      //on click button to fetch, show, or throw error
+      button.addEventListener('click', function (name) {
+         fetch('https://api.openweathermap.org/data/2.5/weather?q=' + input.value + '&appid=02ee5663f2d547d7b7b6529e7719d55a')
+            .then(response => response.json())
+            .then(data => {
+               var tempValue = data['main']['temp'];
+               var nameValue = data['name'];
+               var descValue = data['weather'][0]['description'];
+               main.innerHTML = nameValue;
+               desc.innerHTML = "Desc - " + descValue;
+               temp.innerHTML = "Temp - " + tempValue;
+               input.value = "";
+            })
+            //alert if city is not found
+            .catch(err => alert("City Not Found!!!"));
+         alert(jqXHR.status);
+      })
    </script>
 
    <script src="script/script.js"></script>
